@@ -55,7 +55,7 @@ python geochat_api.py
 -  **3D landing reference:** [EDOLUS](https://edolus.com/) — studied, learned from, and built with gratitude.
 -  **Local LLM:** [GeoChat](https://github.com/mbzuai-oryx/GeoChat) (MBZUAI Oryx) — open-source satellite VLM.
 -  **Map tiles:** Esri World Imagery.
--  **Original dashboard layout:** [Prakash (@PrakashMB-1213)](https://github.com/PrakashMB-1213).
+-  **Original dashboard layout:** [Prakash (@PrakashMB-1213)](https://github.com/PrakashMB-1213) and [shankar (@shankar791)](https://github.com/shankar791)
 
 **By**
 **T.Rushendar Reddy**
