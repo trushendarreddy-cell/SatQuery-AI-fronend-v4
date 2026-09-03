@@ -1,100 +1,82 @@
-# EDOLUS — 3D Interactive Web Experience Clone
+# SatQuery AI — Frontend 🛰️✨
 
-A standalone clone of the interactive 3D WebGL web experience from [https://edolus.com/](https://edolus.com/).
+Hi there! Thanks for stopping by our repo. **SatQuery AI** is a geospatial intelligence frontend we built for a Smart India Hackathon project. It pairs a slick 3D landing experience with a serious earth-observation dashboard for change detection, SAR radar analysis, and spatial reasoning.
 
----
-
-## 🌟 Overview
-
-**EDOLUS** is a WebGL2 3D interactive application built with the PlayCanvas engine. It delivers cinematic animations, camera walks, real-time lighting, interactive 3D orbital satellites and compute hardware models, animated shaders, and multi-track audio.
+We had a lot of fun building it, and we couldn't have done it without some amazing open work from the community — see the **Acknowledgements** section below.
 
 ---
 
-## 🚀 Quick Start
+## 🌟 What's inside
 
-### 1. Run with Python (Recommended)
+### 1. `llm/frontend/` — 3D Interactive Landing (PlayCanvas)
+A cinematic WebGL2 landing page that boots straight into a 3D scene. Built on the PlayCanvas engine with GSAP animations, custom shaders, multi-track audio, and a bunch of `.glb` models, video backgrounds, and Basis-compressed textures.
 
-Run the included multithreaded server with full byte-range media streaming support:
+### 2. `llm/satquery-frontend-dashboard/` — Earth Intelligence Dashboard
+A liquid-glassmorphic geospatial dashboard featuring:
+- **Interactive Leaflet map** with high-res Esri satellite imagery (centered on Vignan University, India).
+- **Multi-modal intake drawer** — single optical, bi-temporal image pair, and Sentinel-1 SAR dual-pol.
+- **Bi-temporal change detection** (ChangeFormer T4) with grounded polygons for vegetation gain, built-up expansion, and water retention.
+- **Multi-session history switcher** with three example scenarios (campus expansion, algal bloom, mangrove audit).
+- **AOI Magic Wand**, draggable split-swipe comparison, and an interactive mini-calendar for orbit-epoch switching.
+
+---
+
+## 🚀 Quick start
 
 ```bash
+# 3D landing
+cd llm/frontend
 python serve.py 3000
+# open http://localhost:3000
+
+# Dashboard
+cd llm/satquery-frontend-dashboard
+python serve.py 3001
+# open http://localhost:3001
 ```
 
-Open **[http://localhost:3000](http://localhost:3000)** in your browser.
-
-### 2. Run with Node.js / `npx serve`
-
-```bash
-npx serve -l 3000 .
-```
-
-### 3. Run with VS Code Live Server
-
-Open the repository in VS Code and click **Go Live** on `index.html`.
-
-> **Note**: A local web server is required because modern browsers restrict WebGL shaders, WebAssembly modules, and local `fetch()` calls over the `file://` protocol.
+> A local web server is required — browsers block WebGL/WASM/`fetch()` over `file://`.
 
 ---
 
-## 📦 What's Included
+## 🛠️ Tech stack
 
-- **3D Models (`.glb`)**:
-  - `Tesla-ready2.glb` (7.3 MB)
-  - `ComputeTrayJOINED.glb` (7.5 MB)
-  - `StarlinkV2-1.glb` (3.6 MB)
-  - `GDX-3PODS-F2.glb` (1.5 MB)
-  - `DiamondV4.glb` (1.4 MB)
-  - `AutonomousDeployment.glb`
-  - `MAP.glb`, `processor.glb`, `CurvedScreen.glb`, `triangle3D.glb`
-- **Audio Stems & Sound FX (`.ogg`)**:
-  - Multi-track stems: `melody_stem`, `instruments_stem`, `bass_stem`
-  - Interactive UI sound effects: `BTNclick2`, `diamond2`, `map`, `rack`, `computecore2`, `textchip2`, `quantum5`, `UIscreen`, `AICHIP`, `intelligent`, `Scrambletext`
-- **HD Video Backgrounds (`.mp4`)**:
-  - `Space-compressNOAUDIO-YTfullHD.mp4` (6.0 MB)
-  - `Seedance2-0_r2v_00002YTHD_lowbitrate.mp4` (5.7 MB)
-- **Universal Textures & Shaders**:
-  - WebAssembly Basis Universal compressed textures (`.basis`)
-  - Normal maps, ambient occlusion, diffuse, reflection maps, and skyboxes
-- **Engine Runtime**:
-  - PlayCanvas Engine (`playcanvas-stable.min.js`)
-  - Basis Transcoder WASM decoder (`basis.wasm.js`, `basis.wasm.wasm`, `basis.js`)
-  - GSAP (`gsap.min.js`) animation library
-  - Core game logic (`__game-scripts.js`), loaders, scene graph (`2509662.json`), and asset registry (`config.json`)
+- **Graphics**: WebGL2 + PlayCanvas Engine
+- **Maps**: Leaflet 1.9.4 + Esri World Imagery
+- **Styling**: TailwindCSS 3.4 with a custom liquid-glassmorphism layer
+- **Animation**: GSAP + custom offscreen-canvas workers
+- **3D formats**: Binary glTF (`.glb`) and Basis Universal Texture Compression
+- **Audio**: HTML5 Web Audio API (multi-channel stems + UI SFX)
+- **WebAssembly**: Google Basis Universal Transcoder
 
 ---
 
-## 🛠️ Project Structure
+## 💡 Local LLM note
 
-```
-├── index.html                  # Main application entrypoint
-├── styles.css                  # Core CSS and UI styling
-├── gsap.min.js                 # GSAP animation runtime
-├── playcanvas-stable.min.js    # PlayCanvas WebGL runtime
-├── __settings__.js             # Engine initialization settings
-├── __modules__.js              # Module & WASM loader
-├── __start__.js                # Application bootstrapper
-├── __loading__.js              # Stepped odometer loader & splash sequence
-├── __game-scripts.js           # Interactive application scripts & shaders
-├── config.json                 # PlayCanvas asset registry & scene configs
-├── 2509662.json                # Main scene entity hierarchy
-├── serve.py                    # Multithreaded local development server
-├── files/
-│   └── assets/                 # 3D models, textures, audio, and videos
-└── README.md                   # Documentation
-```
+The dashboard talks to a vision-language model over a local HTTP endpoint. We packaged a thin **GeoChat API** wrapper (`geochat_api.py`) that runs the model on your own machine — useful for offline demos and judge runs. See the script for setup.
 
 ---
 
-## ⚡ Tech Stack
+## 🙏 Acknowledgements & thanks
 
-- **Graphics**: WebGL2 / PlayCanvas Engine
-- **3D Formats**: Binary glTF (`.glb`), Basis Universal Texture Compression (`.basis`)
-- **Animation**: GSAP + Custom Web Worker Offscreen Canvas renderers
-- **Audio**: Multi-channel HTML5 Web Audio API
-- **WebAssembly**: Google Basis Universal Transcoder WASM
+A lot of this project stands on the shoulders of generous, brilliant work from the open-source community. We want to give proper credit and say thank you:
+
+- **🎨 The 3D landing page is heavily inspired by [EDOLUS](https://edolus.com/).**
+  We studied their site, learned from the way they choreograph the 3D scene, the camera walks, the audio stems, the lighting, the shader work, the whole vibe. Our landing page is a learning tribute to that — thank you, EDOLUS team, for the inspiration. If you happen to read this, we really appreciate the work you put into that experience. 🙏
+
+- **🧠 The local LLM is based on [GeoChat](https://github.com/mbzuai-oryx/GeoChat).**
+  GeoChat is the multi-modal large-language model for remote-sensing images from MBZUAI's Oryx lab. We use the model locally for captioning, visual question answering, and grounded region reasoning over satellite imagery. Huge thanks to the GeoChat authors — Kuckreja, Danish, Akhtar, et al. — for open-sourcing their work. The earth-observation community is much better off with GeoChat in it. 🌍
+
+- **🛰️ Sentinel-1 SAR / Sentinel-2 optical sample data** — used for evaluation workflows.
+- **🗺️ Map tiles** — courtesy of Esri World Imagery.
+
+If we forgot to credit you, please open an issue and we'll add you immediately.
 
 ---
 
-## 📄 License & Attribution
+## 👤 Authors
 
-All 3D assets, trademarks, and design rights belong to **EDOLUS** ([edolus.com](https://edolus.com/)). This repository is cloned for development and showcase purposes.
+- **Trushendar Reddy** — frontend & integration lead (this repo).
+- **Prakash** — original dashboard layout and glassmorphism system ([Sat-Query-Frontend-Dashboard-](https://github.com/PrakashMB-1213/Sat-Query-Frontend-Dashboard-)).
+
+Built with ❤️ for SIH 2026.
