@@ -1,63 +1,97 @@
-# SatQuery AI — Frontend v4 by rushendar reddy
+# SatQuery AI — Earth Observation Interface
 
-A geospatial intelligence frontend built for a Smart India Hackathon 2026 project, pairing a cinematic 3D landing experience with a serious earth-observation dashboard for multitemporal satellite change detection, SAR radar analysis, and spatial reasoning.
+SatQuery AI is a geospatial intelligence product built around a practical question: **can someone ask about satellite imagery in natural language and get an answer grounded in the imagery rather than having to manually inspect every scene?**
 
-> "We stand on the shoulders of giants — the 3D landing was inspired by [EDOLUS](https://edolus.com/) and the local vision-language brain is built on the open-source [GeoChat](https://github.com/mbzuai-oryx/GeoChat) model from MBZUAI's Oryx lab. Huge thanks to both teams."
+This repository contains the frontend experience and the local vision-language service used while developing the system for Smart India Hackathon 2026.
 
+## What the product is trying to do
 
-##  What's inside
-In this v4 version, I fixed some bugs in the frontend dashboard and I ran this llm locally but yet to be integrated with the frontend,the llm is perfect for answer and image change detection and comparison and provide adequate results with evidence.Do check out **geochat_api** file.
+Satellite imagery is powerful, but working with it normally involves choosing scenes, opening raster data, comparing dates, inspecting bands, and interpreting changes. SatQuery brings those steps behind a simpler interface.
+
+The current system is built around three capabilities:
+
+- **Natural-language interaction** with the imagery workflow
+- **Bi-temporal comparison** for finding and explaining changes between images
+- **Vision-language analysis** for image questions, captions, and evidence-based interpretation
+
+## System shape
+
+```text
+User query
+   ↓
+SatQuery interface
+   ↓
+Analysis request
+   ↓
+Local GeoChat service
+   ├── Single-image VQA / captioning
+   ├── Bi-temporal comparison
+   └── Visual change overlay
+   ↓
+Evidence returned to the interface
 ```
+
+The local service is intentionally separated from the frontend so the vision-language model can be developed and tested independently of the UI.
+
+## Repository structure
+
+```text
 llm/
-├── frontend/                         # 3D WebGL2 landing page (PlayCanvas + GSAP)
-│   ├── index.html
-│   ├── files/assets/                 # .glb models, .basis textures, .ogg audio, .mp4 backgrounds
-│   └── README.md
-├── satquery-frontend-dashboard/      # Leaflet + glassmorphism earth-intelligence dashboard
-│   ├── index.html
-│   ├── serve.py
-│   ├── interface.md                  # 5-stage roadmap & implementation tracker
-│   ├── INTEGRATION_SPEC_AND_ROADMAP.md  # LangGraph agent architecture & API specs
-│   └── README.md
-└── geochat_api.py                    # Local GeoChat-7B vision-language API wrapper
+├── frontend/                       # 3D landing experience
+├── satquery-frontend-dashboard/    # Earth-observation dashboard
+└── geochat_api.py                  # Local GeoChat-7B API
 ```
 
-##  Local LLM
+## Local vision-language service
 
-`geochat_api.py` is a FastAPI microservice that loads the **GeoChat-7B** vision-language model on your local GPU and exposes three endpoints for the dashboard:
+`geochat_api.py` is a FastAPI service that loads GeoChat-7B on a local GPU and exposes:
 
-- `POST /chat` — single-image VQA / captioning.
-- `POST /compare` — two-image bi-temporal comparison with pixel-diff and semantic reasoning.
-- `POST /compare/visual` — returns a side-by-side PNG with red highlight overlay for the changed regions.
+- `POST /chat` — single-image visual question answering / captioning
+- `POST /compare` — comparison of two images with visual and semantic analysis
+- `POST /compare/visual` — generated visual overlay of changed regions
 
-Run it with:
+The service is intended for local development and experimentation; it requires a compatible GPU environment and the model setup described in the code/configuration.
+
+## Run locally
+
+Start the landing experience:
 
 ```bash
-$env:GEOCHAT_API_KEY="your-secret-key"
+cd llm/frontend
+python serve.py 3000
+```
+
+Start the dashboard:
+
+```bash
+cd llm/satquery-frontend-dashboard
+python serve.py 3001
+```
+
+Start the local vision-language service:
+
+```bash
 python geochat_api.py
 ```
 
-##  Quick start
+Set `GEOCHAT_API_KEY` before starting the API if your local configuration requires it.
 
-```bash
-# 3D landing
-cd llm/frontend && python serve.py 3000
+## Engineering focus
 
-# Dashboard
-cd llm/satquery-frontend-dashboard && python serve.py 3001
+The interesting part of this project is not the landing page. It is the boundary between a natural-language request, geospatial imagery, multimodal reasoning, and evidence shown back to a user.
 
-# Local GeoChat LLM
-python geochat_api.py
-```
+The frontend is therefore treated as the product surface while the local model service acts as an independent intelligence layer that can be replaced or extended as the analysis pipeline matures.
 
-## Acknowledgements
+## Credits
 
--  **3D landing reference:** [EDOLUS](https://edolus.com/) — studied, learned from, and built with gratitude.
--  **Local LLM:** [GeoChat](https://github.com/mbzuai-oryx/GeoChat) (MBZUAI Oryx) — open-source satellite VLM.
--  **Map tiles:** Esri World Imagery.
--  **Original dashboard layout:** [Prakash (@PrakashMB-1213)](https://github.com/PrakashMB-1213) and [shankar (@shankar791)](https://github.com/shankar791)
+The 3D landing experience was inspired by EDOLUS. The local vision-language component uses the open-source GeoChat model from MBZUAI's Oryx lab. The dashboard also builds on work by Prakash (@PrakashMB-1213) and Shankar (@shankar791).
 
-**By**
-**T.Rushendar Reddy**
-**AIML**
-**Hyderabad**
+## Project status
+
+This is an active research/product prototype rather than a finished satellite-analysis platform. The local GeoChat service is functional, while deeper integration between the analysis pipeline and the full dashboard is still being developed.
+
+## Author
+
+**T. Rushendar Reddy**  
+Artificial Intelligence and Machine Learning  
+Hyderabad, India
