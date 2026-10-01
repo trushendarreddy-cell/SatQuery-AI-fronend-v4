@@ -1,0 +1,20 @@
+# Dependencies for llm/geochat_api.py -- the local GeoChat-7B vision-language
+# service. The two serve.py scripts use only the standard library.
+#
+#   pip install -r requirements.txt
+#
+# NOTE: the `geochat` package itself is not vendored here. It comes from
+# MBZUAI's Oryx lab:
+#   https://github.com/mbzuai-oryx/GeoChat
+# Install it separately before running geochat_api.py.
+
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+python-multipart>=0.0.9
+pillow>=10.2.0
+numpy>=1.26.0
+
+# Runs the 7B vision-language model locally. Install the build that matches
+# your CUDA version; the default PyPI wheel bundles CUDA 12.x.
+torch>=2.2.0
+torchvision>=0.17.0

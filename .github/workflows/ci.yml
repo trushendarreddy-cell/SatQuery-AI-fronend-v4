@@ -1,0 +1,40 @@
+name: SatQuery Frontend CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  static-servers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Syntax-check the Python entry points
+        # geochat_api.py only gets compiled, not imported: loading GeoChat-7B
+        # needs a GPU and the external `geochat` package, neither of which a
+        # CI runner has.
+        run: |
+          python -m py_compile llm/geochat_api.py
+          python -m py_compile llm/frontend/serve.py
+          python -m py_compile llm/satquery-frontend-dashboard/serve.py
+
+      - name: Serve the dashboard and request it
+        working-directory: llm/satquery-frontend-dashboard
+        run: |
+          python serve.py 3099 &
+          for i in $(seq 1 10); do
+            if curl -fsS -o /dev/null http://127.0.0.1:3099/; then
+              echo "dashboard responded on attempt $i"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "dashboard did not respond" >&2
+          exit 1
