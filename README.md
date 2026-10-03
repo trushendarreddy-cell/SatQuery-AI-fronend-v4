@@ -54,6 +54,9 @@ The service is intended for local development and experimentation; it requires a
 
 ## Run locally
 
+Both `serve.py` scripts use only the Python standard library, so the two
+static surfaces run with no install step.
+
 Start the landing experience:
 
 ```bash
@@ -71,10 +74,21 @@ python serve.py 3001
 Start the local vision-language service:
 
 ```bash
-python geochat_api.py
+pip install -r llm/requirements.txt
+python llm/geochat_api.py
 ```
 
 Set `GEOCHAT_API_KEY` before starting the API if your local configuration requires it.
+
+The vision-language service is the only part with dependencies. It needs a
+CUDA-capable GPU, and the `geochat` package itself is not vendored here — it
+comes from [MBZUAI's Oryx lab](https://github.com/mbzuai-oryx/GeoChat).
+
+## CI
+
+GitHub Actions compiles all three Python entry points and boots the dashboard
+server to confirm it responds. `geochat_api.py` is compiled rather than
+imported, because loading the model needs a GPU that a runner does not have.
 
 ## Engineering focus
 
