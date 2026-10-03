@@ -4,6 +4,8 @@ SatQuery AI is a geospatial intelligence product built around a practical questi
 
 This repository contains the frontend experience and the local vision-language service used while developing the system for Smart India Hackathon 2026.
 
+![The earth-observation dashboard showing temporal change detection over Vignan University campus, with an AOI legend and quantified vegetation and built-up change](docs/images/dashboard.jpg)
+
 ## What the product is trying to do
 
 Satellite imagery is powerful, but working with it normally involves choosing scenes, opening raster data, comparing dates, inspecting bands, and interpreting changes. SatQuery brings those steps behind a simpler interface.
