@@ -109,3 +109,7 @@ This is an active research/product prototype rather than a finished satellite-an
 **T. Rushendar Reddy**  
 Artificial Intelligence and Machine Learning  
 Hyderabad, India
+
+## License
+
+MIT — see [LICENSE](LICENSE).
