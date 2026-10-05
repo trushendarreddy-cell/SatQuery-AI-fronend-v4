@@ -112,7 +112,15 @@ The frontend is therefore treated as the product surface while the local model s
 
 ## Credits
 
-The 3D landing experience was inspired by EDOLUS. The local vision-language component uses the open-source GeoChat model from MBZUAI's Oryx lab. The dashboard also builds on work by Prakash (@PrakashMB-1213) and Shankar (@shankar791).
+This project is the work of three people:
+
+- **T. Rushendar Reddy** ([@trushendarreddy-cell](https://github.com/trushendarreddy-cell)) — AI/ML architecture, backend, analysis orchestration, the GeoChat service, and this frontend
+- **Prakash MB** ([@PrakashMB-1213](https://github.com/PrakashMB-1213)) — dashboard work
+- **Shankar** ([@shankar791](https://github.com/shankar791)) — dashboard work
+
+The 3D landing experience was inspired by [EDOLUS](https://edolus.com/). The
+local vision-language component uses the open-source
+[GeoChat](https://github.com/mbzuai-oryx/GeoChat) model from MBZUAI's Oryx lab.
 
 ## Project status
 
