@@ -54,6 +54,18 @@ llm/
 
 The service is intended for local development and experimentation; it requires a compatible GPU environment and the model setup described in the code/configuration.
 
+## Repository size
+
+This repository is around 35 MB, almost entirely the PlayCanvas 3D engine and
+its assets: glTF models, basis textures, background video, and the engine
+bundle itself. The landing experience cannot render without them.
+
+To work on the dashboard or the API alone, clone without the landing assets:
+
+```bash
+git clone --filter=blob:none --sparse https://github.com/trushendarreddy-cell/SatQuery-AI-fronend-v4.git
+```
+
 ## Run locally
 
 Both `serve.py` scripts use only the Python standard library, so the two
